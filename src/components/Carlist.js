@@ -2,6 +2,7 @@ import {SERVER_URL} from '../constants.js'
 import React, {useEffect, useState} from 'react';
 import {DataGrid} from '@mui/x-data-grid';
 import Snackbar from '@mui/material/Snackbar';
+import AddCar from './AddCar.js';
 
 // Function/Component to return list of cars
 function Carlist(){
@@ -58,7 +59,21 @@ function Carlist(){
        }
     }
 
+    //Add a new car
+    const addCar = (car) => {
+        fetch(SERVER_URL + 'api/cars',
+        {
+        method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(car)
+        })
+        .then(response => {if(response.ok){fetchCars();}else{alert('Can\'t Save the new Car!')}})
+        .catch(err => console.log(err))
+    }
+
     return(
+    <React.Fragment>
+        <AddCar addCar={addCar} />
         <div style={{height:500, width:'100%'}}>
             <DataGrid
                 rows={cars}
@@ -73,6 +88,7 @@ function Carlist(){
                 message="Car Deleted"
             />
         </div>
+        </React.Fragment>
     );
 }
 export default Carlist;
