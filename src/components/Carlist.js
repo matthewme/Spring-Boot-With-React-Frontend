@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {DataGrid} from '@mui/x-data-grid';
 import Snackbar from '@mui/material/Snackbar';
 import AddCar from './AddCar.js';
+import EditCar from './EditCar.js';
 
 // Function/Component to return list of cars
 function Carlist(){
@@ -35,6 +36,16 @@ function Carlist(){
         {field:'year',headerName:'Year',width:150},
         {field:'price',headerName:'Price',width:150},
         {
+            field:'_links.car.href',
+            headerName: 'Edit',
+            sortable: false,
+            filterable: false,
+            renderCell: row =>
+                <EditCar
+                    data={row}
+                    updateCar={updateCar}/>
+        },
+        {
             field: '_links.self.href',
             headerName:'Delete',
             sortable: false,
@@ -59,7 +70,7 @@ function Carlist(){
        }
     }
 
-    //Add a new car
+    // Add a new car
     const addCar = (car) => {
         fetch(SERVER_URL + 'api/cars',
         {
@@ -67,7 +78,19 @@ function Carlist(){
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify(car)
         })
-        .then(response => {if(response.ok){fetchCars();}else{alert('Can\'t Save the new Car!')}})
+        .then(response => {if(response.ok){fetchCars();}else{alert('Can\'t Save the new car!')}})
+        .catch(err => console.log(err))
+    }
+
+    // Update Car
+    const updateCar = (car, link) => {
+        fetch(link,
+        {
+        method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(car)
+        })
+        .then(response => {if(response.ok){fetchCars();}else{alert('Can\'t update the car!')}})
         .catch(err => console.log(err))
     }
 
