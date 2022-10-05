@@ -1,9 +1,19 @@
 import {SERVER_URL} from '../constants.js'
 import React, {useEffect, useState} from 'react';
-import {DataGrid} from '@mui/x-data-grid';
+import {DataGrid, GridToolbarContainer, GridToolbarExport, gridClasses} from '@mui/x-data-grid';
 import Snackbar from '@mui/material/Snackbar';
 import AddCar from './AddCar.js';
 import EditCar from './EditCar.js';
+
+
+function CustomToolbar(){
+    return (
+        <GridToolbarContainer
+            className={gridClasses.toolbarContainer}>
+            <GridToolbarExport />
+        </GridToolbarContainer>
+    );
+}
 
 // Function/Component to return list of cars
 function Carlist(){
@@ -103,6 +113,7 @@ function Carlist(){
                 columns={columns}
                 disableSelectionOnClick={true}
                 getRowId={row => row._links.self.href}
+                components={{Toolbar: CustomToolbar}}
             />
             <Snackbar
                 open={open}
