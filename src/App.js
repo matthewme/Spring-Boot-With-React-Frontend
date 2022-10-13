@@ -5,6 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 //Import carlist compenent to render in appjs
 import Carlist from './components/Carlist';
+import Login from './components/Login';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
             </Typography>
         </Toolbar>
       </AppBar>
-      <Carlist />
+      <Login />
     </div>
   );
 }
