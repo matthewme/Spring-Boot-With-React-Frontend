@@ -4,6 +4,9 @@ import {DataGrid} from '@mui/x-data-grid';
 import Snackbar from '@mui/material/Snackbar';
 import AddCar from './AddCar.js';
 import EditCar from './EditCar.js';
+import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 // Function/Component to return list of cars
 function Carlist(){
@@ -51,9 +54,7 @@ function Carlist(){
             sortable: false,
             filterable: false,
             renderCell: row =>
-                <button
-                onClick={() => onDelClick(row.id)}>Delete
-                </button>
+                <IconButton onClick={() => onDelClick(row.id)}><DeleteIcon color='error' /></IconButton>
         }
     ]
 
@@ -96,7 +97,9 @@ function Carlist(){
 
     return(
     <React.Fragment>
-        <AddCar addCar={addCar} />
+        <Stack mt={2} mb={2}>
+            <AddCar addCar={addCar} />
+        </Stack>
         <div style={{height:500, width:'100%'}}>
             <DataGrid
                 rows={cars}
